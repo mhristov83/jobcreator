@@ -47,14 +47,12 @@ for (env in environments) {
     def label = 'ui-tests-runner'
     suiteJob = JobFactory.createWindows(this, jobName, label)
 
+    GitHelper.useGitLabBsQARepo(suiteJob, defaultBranch)
+
     suiteJob.with {
       wrappers {
         colorizeOutput "xterm"
         timestamps()
-      }
-
-      scm{
-
       }
 
       if(env.envName=='UAT') {
