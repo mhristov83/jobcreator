@@ -29,7 +29,7 @@ def suiteNamesString = ''
 
 def SIT = [id:'0', shortName:'sit', envName:'SIT', viewName:'U3-SIT', envConfig:'ExternalConfigSIT', envConfigTapInt:'ExternalConfigTapIntSIT']
 def UAT = [id:'1', shortName:'uat', envName:'UAT', viewName:'U4-UAT', envConfig:'ExternalConfigUAT', envConfigTapInt:'ExternalConfigTapIntUAT']
-def LIVE = [id:'2', shortName:'live', envName:'LIVE', viewName:'TU-LIVE', envConfig:'ExternalConfigLIVE', envConfigTapInt:'ExternalConfigTapIntLIVE']
+def LIVE = [id:'2', shortName:'live', envName:'LIVE', viewName:'U5-LIVE', envConfig:'ExternalConfigLIVE', envConfigTapInt:'ExternalConfigTapIntLIVE']
 
 def environments = []
 
@@ -44,8 +44,8 @@ for (env in environments) {
     suiteNamesString = jobName + ',' + suiteNamesString
 
     def suiteJob = null
-    suiteJob = JobFactory.createWindows(this, jobName)
-    suiteJob.label = 'ui-tests-runner'
+    def label = 'ui-tests-runner'
+    suiteJob = JobFactory.createWindows(this, jobName, label)
 
     suiteJob.with {
       wrappers {
