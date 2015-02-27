@@ -189,7 +189,7 @@ job(type: BuildFlow) {
     build.state.setResult(finalResult)    
     """)
      }
-  }
+  
 
 suiteNamesString = ''
 }
