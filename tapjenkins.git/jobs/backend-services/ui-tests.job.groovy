@@ -53,10 +53,6 @@ for (env in environments) {
         timestamps()
       }
 
-      throttleConcurrentBuilds {
-        categories([env.envName])
-      }
-
       if(env.envName=='UAT') {
        steps {
         batchFile(($/
@@ -148,6 +144,7 @@ if not %ERRORLEVEL%==0 (
 
      }
    }
+
    publishers {
       archiveJunit 'UITests\\SIKULI\\results\\*.xml'
     }
@@ -156,7 +153,7 @@ if not %ERRORLEVEL%==0 (
 }
 
 job(type: BuildFlow) {
-      name 'Run_all_tests_for_' + env.envName + '_environment'
+      name 'Run_all_UI_tests_for_' + env.envName + '_environment'
       label "ui-tests-runner"
     
     deliveryPipelineConfiguration('Environment - ' + env.envName, 'Run Integration Tests')
@@ -169,16 +166,16 @@ job(type: BuildFlow) {
   buildFlow("""
     def results = []
     
-    ignore(FAILURE){ retry(3) {results[0] = build("${env.shortName}-UI-ApiKeys-Tests")}}
-    ignore(FAILURE){ retry(3) {results[1] = build("${env.shortName}-UI-CloudCode-Tests")}}
-    ignore(FAILURE){ retry(3) {results[2] = build("${env.shortName}-UI-ContentType-Tests")}}
-    ignore(FAILURE){ retry(3) {results[3] = build("${env.shortName}-UI-Downloads-Tests")}}
-    ignore(FAILURE){ retry(3) {results[4] = build("${env.shortName}-UI-Files-Tests")}}
-    ignore(FAILURE){ retry(3) {results[5] = build("${env.shortName}-UI-Project-Tests")}}
-    ignore(FAILURE){ retry(3) {results[6] = build("${env.shortName}-UI-PushNotifications-Tests")}}
-    ignore(FAILURE){ retry(3) {results[7] = build("${env.shortName}-UI-ResponsiveImages-Tests")}}
-    ignore(FAILURE){ retry(3) {results[8] = build("${env.shortName}-UI-TimeOpenProject-Tests")}}
-    ignore(FAILURE){ retry(3) {results[9] = build("${env.shortName}-UI-TimeOpenProject-Tests")}}
+    ignore(FAILURE){ retry(3) {results[0] = build("${env.envName}-UI-ApiKeys-Tests")}}
+    ignore(FAILURE){ retry(3) {results[1] = build("${env.envName}-UI-CloudCode-Tests")}}
+    ignore(FAILURE){ retry(3) {results[2] = build("${env.envName}-UI-ContentType-Tests")}}
+    ignore(FAILURE){ retry(3) {results[3] = build("${env.envName}-UI-Downloads-Tests")}}
+    ignore(FAILURE){ retry(3) {results[4] = build("${env.envName}-UI-Files-Tests")}}
+    ignore(FAILURE){ retry(3) {results[5] = build("${env.envName}-UI-Project-Tests")}}
+    ignore(FAILURE){ retry(3) {results[6] = build("${env.envName}-UI-PushNotifications-Tests")}}
+    ignore(FAILURE){ retry(3) {results[7] = build("${env.envName}-UI-ResponsiveImages-Tests")}}
+    ignore(FAILURE){ retry(3) {results[8] = build("${env.envName}-UI-TimeOpenProject-Tests")}}
+    ignore(FAILURE){ retry(3) {results[9] = build("${env.envName}-UI-TimeOpenProject-Tests")}}
     
     def finalResult = SUCCESS
     
@@ -212,7 +209,7 @@ for (env in environments) {
     }
     for (suite in suites) {
       jobs {
-        names(env.envName+'-UI-Tests-'+suite.suiteTitle)
+        names(env.envName+'-UI-'+suite.suiteTitle+'-Tests')
         name('Run_all_tests_for_' + env.envName + '_environment')
       }
     }
