@@ -40,7 +40,7 @@ environments.add(LIVE)
 //Create the jobs for the test suites
 for (env in environments) {
   for (suite in suites) {
-    def jobName = env.envName+'-UI-'+suite.suiteTitle +'Tests'
+    def jobName = env.envName+'-UI-'+'TESTS'+suite.suiteTitle
     suiteNamesString = jobName + ',' + suiteNamesString
 
     def suiteJob = null
@@ -53,43 +53,47 @@ for (env in environments) {
         timestamps()
       }
 
+      scm{
+
+      }
+
       if(env.envName=='UAT') {
        steps {
         batchFile(($/
- \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
- set TestRunner="C:\SikuliX\runScript.cmd"
- set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}_tests.sikuli"
- set TestEnv=https://testtap.telerik.com
- set UserEmail=bsload@telerik.local
- set apiUrl=testapi.everlive.com/v1/
- set apiKey=MJsFfcOodnypQC63
- set masterKey=AGkXJ3j1oMSsMMFn14OA9hNn3Y2SWnI6
- set MetadataAppId=51e2cce0-6f37-11e4-832a-879d9d59ccef
- set timeout=60
-
- call %TestRunner% -r %TestList%
-
- findstr /m "errors=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml 
- if not %ERRORLEVEL%==0 ( 
-   exit /B 1
-   )
-
- findstr /m "failures=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml 
- if not %ERRORLEVEL%==0 ( 
-   exit /B 1
-   )
-          /$))
-      }
-    }
-
-
-    else if (env.envName=='SIT')
-    {
-      steps {
-        batchFile(($/
 \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
 set TestRunner="C:\SikuliX\runScript.cmd"
-set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\"+suite.suiteName+"_tests.sikuli"
+set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}_tests.sikuli"
+set TestEnv=https://testtap.telerik.com
+set UserEmail=bsload@telerik.local
+set apiUrl=testapi.everlive.com/v1/
+set apiKey=MJsFfcOodnypQC63
+set masterKey=AGkXJ3j1oMSsMMFn14OA9hNn3Y2SWnI6
+set MetadataAppId=51e2cce0-6f37-11e4-832a-879d9d59ccef
+set timeout=60
+
+call %TestRunner% -r %TestList%
+
+findstr /m "errors=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml 
+if not %ERRORLEVEL%==0 ( 
+  exit /B 1
+  )
+
+findstr /m "failures=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml 
+if not %ERRORLEVEL%==0 ( 
+  exit /B 1
+  )
+         /$))
+     }
+   }
+
+
+   else if (env.envName=='SIT')
+   {
+     steps {
+       batchFile(($/
+\\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
+set TestRunner="C:\SikuliX\runScript.cmd"
+set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}_tests.sikuli"
 set TestEnv=https://testtap.telerik.com
 set UserEmail=bsload@telerik.local
 set apiUrl=testapi.everlive.com/v1/
@@ -119,28 +123,28 @@ if not %ERRORLEVEL%==0 (
       steps{
        batchFile(($/
 \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
- set TestRunner="C:\SikuliX\runScript.cmd"
- set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\'+suite.suiteName+'_tests.sikuli"
- set TestEnv=https://platform.telerik.com
- set UserEmail=bsload@telerik.local
- set apiUrl=api.everlive.com/v1/
- set apiKey=UwoNtYbnakMRNucW
- set masterKey=BcA4dRTerYa5FsT4qNbCTF1grDbI6RDh
- set MetadataAppId=4cb190e0-6f36-11e4-b1c9-6de58479113e
- set timeout=60
+set TestRunner="C:\SikuliX\runScript.cmd"
+set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}_tests.sikuli"
+set TestEnv=https://platform.telerik.com
+set UserEmail=bsload@telerik.local
+set apiUrl=api.everlive.com/v1/
+set apiKey=UwoNtYbnakMRNucW
+set masterKey=BcA4dRTerYa5FsT4qNbCTF1grDbI6RDh
+set MetadataAppId=4cb190e0-6f36-11e4-b1c9-6de58479113e
+set timeout=60
 
- call %TestRunner% -r %TestList%
+call %TestRunner% -r %TestList%
 
- findstr /m "errors=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml 
- if not %ERRORLEVEL%==0 ( 
-   exit /B 1
-   )
+findstr /m "errors=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml 
+if not %ERRORLEVEL%==0 ( 
+  exit /B 1
+  )
 
- findstr /m "failures=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml 
- if not %ERRORLEVEL%==0 ( 
-   exit /B 1
-   )
-                /$))
+findstr /m "failures=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml 
+if not %ERRORLEVEL%==0 ( 
+  exit /B 1
+  )
+               /$))
 
      }
    }
@@ -148,7 +152,7 @@ if not %ERRORLEVEL%==0 (
    publishers {
       archiveJunit 'UITests\\SIKULI\\results\\*.xml'
     }
- }
+}
 
 }
 
@@ -210,7 +214,7 @@ for (env in environments) {
     for (suite in suites) {
       jobs {
         names(env.envName+'-UI-'+suite.suiteTitle+'-Tests')
-        name('Run_all_tests_for_' + env.envName + '_environment')
+        name('Run_all_UI_tests_for_' + env.envName + '_environment')
       }
     }
   }
