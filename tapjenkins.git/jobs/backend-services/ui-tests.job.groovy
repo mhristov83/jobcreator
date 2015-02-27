@@ -40,7 +40,7 @@ environments.add(LIVE)
 //Create the jobs for the test suites
 for (env in environments) {
   for (suite in suites) {
-    def jobName = env.envName+'-UI-'+'TESTS'+suite.suiteTitle
+    def jobName = env.envName+'-UI-TESTS-'+suite.suiteTitle
     suiteNamesString = jobName + ',' + suiteNamesString
 
     def suiteJob = null
@@ -60,7 +60,7 @@ for (env in environments) {
         batchFile(($/
 \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
 set TestRunner="C:\SikuliX\runScript.cmd"
-set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}_tests.sikuli"
+set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}.sikuli"
 set TestEnv=https://testtap.telerik.com
 set UserEmail=bsload@telerik.local
 set apiUrl=testapi.everlive.com/v1/
@@ -168,16 +168,16 @@ job(type: BuildFlow) {
   buildFlow("""
     def results = []
     
-    ignore(FAILURE){ retry(3) {results[0] = build("${env.envName}-UI-ApiKeys-Tests")}}
-    ignore(FAILURE){ retry(3) {results[1] = build("${env.envName}-UI-CloudCode-Tests")}}
-    ignore(FAILURE){ retry(3) {results[2] = build("${env.envName}-UI-ContentType-Tests")}}
-    ignore(FAILURE){ retry(3) {results[3] = build("${env.envName}-UI-Downloads-Tests")}}
-    ignore(FAILURE){ retry(3) {results[4] = build("${env.envName}-UI-Files-Tests")}}
-    ignore(FAILURE){ retry(3) {results[5] = build("${env.envName}-UI-Project-Tests")}}
-    ignore(FAILURE){ retry(3) {results[6] = build("${env.envName}-UI-PushNotifications-Tests")}}
-    ignore(FAILURE){ retry(3) {results[7] = build("${env.envName}-UI-ResponsiveImages-Tests")}}
-    ignore(FAILURE){ retry(3) {results[8] = build("${env.envName}-UI-TimeOpenProject-Tests")}}
-    ignore(FAILURE){ retry(3) {results[9] = build("${env.envName}-UI-TimeOpenProject-Tests")}}
+    ignore(FAILURE){ retry(3) {results[0] = build("${env.envName}-UI-TESTS-ApiKeys")}}
+    ignore(FAILURE){ retry(3) {results[1] = build("${env.envName}-UI-TESTS-CloudCode")}}
+    ignore(FAILURE){ retry(3) {results[2] = build("${env.envName}-UI-TESTS-ContentType")}}
+    ignore(FAILURE){ retry(3) {results[3] = build("${env.envName}-UI-TESTS-Downloads")}}
+    ignore(FAILURE){ retry(3) {results[4] = build("${env.envName}-UI-TESTS-Files")}}
+    ignore(FAILURE){ retry(3) {results[5] = build("${env.envName}-UI-TESTS-Project")}}
+    ignore(FAILURE){ retry(3) {results[6] = build("${env.envName}-UI-TESTS-PushNotifications")}}
+    ignore(FAILURE){ retry(3) {results[7] = build("${env.envName}-UI-TESTS-ResponsiveImages")}}
+    ignore(FAILURE){ retry(3) {results[8] = build("${env.envName}-UI-TESTS-TimeOpenProject")}}
+    ignore(FAILURE){ retry(3) {results[9] = build("${env.envName}-UI-TESTS-TimeOpenProject")}}
     
     def finalResult = SUCCESS
     
@@ -211,7 +211,7 @@ for (env in environments) {
     }
     for (suite in suites) {
       jobs {
-        names(env.envName+'-UI-'+suite.suiteTitle+'-Tests')
+        names(env.envName+'-UI-TESTS-'+suite.suiteTitle)
         name('Run_all_UI_tests_for_' + env.envName + '_environment')
       }
     }
