@@ -59,7 +59,7 @@ for (env in environments) {
 	
 	if(env.envName=='UAT') {
 	  steps {
-        batchFile("""
+        batchFile(($/
 \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
 set TestRunner="C:\SikuliX\runScript.cmd"
 set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\api_keys_tests.sikuli"
@@ -82,13 +82,13 @@ findstr /m "failures=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml
 if not %ERRORLEVEL%==0 ( 
         exit /B 1
 )
-""")
+/$))
       }
 	
 	}
 	else if (env.envName=='SIT')
       steps {
-        batchFile("""
+        batchFile(($/
 \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
 set TestRunner="C:\SikuliX\runScript.cmd"
 set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\api_keys_tests.sikuli"
@@ -111,13 +111,13 @@ findstr /m "failures=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml
 if not %ERRORLEVEL%==0 ( 
         exit /B 1
 )
-""")
+/$))
       }
 	}
 	
 	else if (env.envName=='LIVE')
 		steps{
-			batchFile("""
+			batchFile(($/
 \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
 set TestRunner="C:\SikuliX\runScript.cmd"
 set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\api_keys_tests.sikuli"
@@ -140,7 +140,7 @@ findstr /m "failures=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml
 if not %ERRORLEVEL%==0 ( 
         exit /B 1
 )
-""")
+/$))
 
 }
 
