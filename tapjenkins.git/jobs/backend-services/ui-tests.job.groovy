@@ -56,7 +56,7 @@ for (env in environments) {
       throttleConcurrentBuilds {
         categories([env.envName])
       }
-      
+
       if(env.envName=='UAT') {
        steps {
         batchFile(($/
@@ -85,8 +85,8 @@ for (env in environments) {
           /$))
       }
     }
-    
-    
+
+
     else if (env.envName=='SIT')
     {
       steps {
@@ -116,8 +116,8 @@ for (env in environments) {
           /$))
       }
     }
-    
-    
+
+
     else if (env.envName=='LIVE')
     {
       steps{
@@ -151,9 +151,9 @@ for (env in environments) {
  }
 
 
- 
+
      publishers {
-      archiveJunit 'UITests\SIKULI\results\*.xml'
+      archiveJunit ($/UITests\SIKULI\results\*.xml/$)
     }
 }
 
@@ -165,7 +165,7 @@ suiteNamesString = ''
 for (env in environments) {
   view(type: ListView) {
     name(env.viewName)
-    description('This view contains all jobs for ' + env.envName + ' environment. You can trigger manually each test suite or use the \"Run_all_tests_for_' + env.envName + '_environment\" job in order to trigger all suites.')
+    description('This view contains all jobs for ' + env.envName + ' environment. You can trigger manually each test suite or use the "Run_all_tests_for_' + env.envName + '_environment" job in order to trigger all suites.')
     filterBuildQueue()
     filterExecutors()
     columns {
