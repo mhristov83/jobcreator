@@ -1,0 +1,3 @@
+jenkins_slave_home: "/var/jenkins/"
+jenkins_slave_user: ubuntu
+openstack_key_name: infrastructure

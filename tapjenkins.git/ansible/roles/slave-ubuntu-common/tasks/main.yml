@@ -1,0 +1,54 @@
+- name: Update apt cache
+  apt: 
+    update_cache: yes
+    cache_valid_time: 600
+
+- name: "Install make, git, zip, cifs-utils, daemon"
+  apt: name={{ item }} state=latest
+  with_items:
+    - make
+    - git
+    - zip
+    - cifs-utils
+    - daemon
+
+- name: Install Java JDK
+  apt: name=openjdk-7-jdk state=latest
+
+- name: Install Ant
+  apt: name=ant state=latest
+
+- name: Install Ruby
+  apt: name=ruby-dev state=latest
+
+- name: Install bundler
+  gem: name=bundler state=latest user_install=no
+
+- name: Install jekyll
+  gem: name=jekyll state=latest user_install=no
+
+- name: Deploy tap-infrastructure-bot ssh key - create .ssh folder
+  file: path={{ jenkins_slave_home }}/.ssh
+        owner={{ swarm_slave_user }}
+        group={{ swarm_slave_user }}
+        mode=777
+        state=directory
+
+- name: Deploy tap-infrastructure-bot ssh key.
+  copy: src=tap-infrastructure-bot_rsa
+        dest={{ jenkins_slave_home }}/.ssh/tap-infrastructure-bot_rsa
+        owner={{ swarm_slave_user }}
+        group={{ swarm_slave_user }}
+        mode=600
+
+- name: Setup Backend Services reference repo
+  git: repo=git@gitlab.telerik.com:backendservices/backend-services.git
+       dest={{ jenkins_slave_home }}/reference_git_repos/backend_services
+       bare=yes
+       key_file={{ jenkins_slave_home }}/.ssh/tap-infrastructure-bot_rsa
+       accept_hostkey=yes
+
+- name: Fix Backend Services reference repo permission
+  file: path={{ jenkins_slave_home }}/reference_git_repos/backend_services/
+        owner={{ jenkins_slave_user }}
+        group={{ jenkins_slave_user }}

@@ -1,0 +1,22 @@
+- name: Setup ubuntu common-slaves instances
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    openstack_flavor_id: 4 #r4.large
+    openstack_names: 
+      - xxx-tapjenkins
+    openstack_tap_role: tapjenkins
+  roles:
+    - openstack
+
+- name: Configure machines
+  hosts: role_tapjenkins
+  remote_user: ubuntu
+  sudo: yes
+  roles:
+    - { role: update-dns, sudo: no }
+    - { role: update-dns, update_dns_template: templates/tapjenkins-dns.j2, sudo: no }
+    - role: telerik-certificate-authority
+    - role: dns-client
+    - role: tapjenkins

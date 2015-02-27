@@ -1,0 +1,27 @@
+- name: Create working directory
+  file: path=/tmp/ansible-puppet state=directory
+
+- name: Get deb for puppet repository ....
+  get_url: url="http://apt.puppetlabs.com/puppetlabs-release-{{ansible_distribution_release}}.deb" "dest=/tmp/ansible-puppet"
+
+- name: Install puppet repo
+  apt: deb="/tmp/ansible-puppet/puppetlabs-release-{{ansible_distribution_release}}.deb"
+
+- name: Install puppet
+  apt:
+    name: puppet
+    state: latest 
+    update_cache: yes
+    cache_valid_time: 600
+    force: yes
+
+- name: Install dependent Jenkins Puppet modules
+  shell: puppet module install rtyler/jenkins
+
+- name: Deploy jenkins.pp
+  template: src="jenkins.j2" dest="/tmp/jenkins.pp"
+
+- name: Run Puppet jenkins configuration
+  shell: puppet apply /tmp/jenkins.pp
+  register: tapjenkins_puppet_apply_result
+  failed_when: "'Error:' in tapjenkins_puppet_apply_result.stderr"

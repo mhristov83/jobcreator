@@ -1,0 +1,40 @@
+- name: Update apt cache
+  apt: 
+    update_cache: yes
+    cache_valid_time: 600
+
+- name: "Install make, daemon"
+  apt: name={{ item }} state=latest
+  with_items:
+    - make
+    - daemon
+
+- name: Install Java JDK
+  apt: name=openjdk-7-jdk state=latest
+
+- name: Create Jenkins directory
+  file: path={{ swarm_slave_home }}
+        group={{ swarm_slave_user }}
+        owner={{ swarm_slave_user }}
+        mode=777
+        state=directory
+
+- name: Download Swarm client
+  get_url: url=http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/{{ swarm_version }}/{{ swarm_jar_name }} 
+           dest={{ swarm_slave_home }}
+  notify: restart jenkins-slave
+
+- name: Create jenkins-slave service
+  copy: src=jenkins-slave 
+        dest=/etc/init.d/jenkins-slave 
+        owner=root group=root mode=755
+  notify: restart jenkins-slave
+
+- name: Create jenkins-slave service defaults
+  template: src=jenkins-slave.defaults.j2
+            dest=/etc/default/jenkins-slave
+            owner=root group=root mode=644
+  notify: restart jenkins-slave
+
+- name: Run jenkins-slave service
+  service: name=jenkins-slave state=started

@@ -1,0 +1,8 @@
+[service-tests-runner]
+172.30.96.107
+172.30.96.79
+172.30.96.80
+
+[diagnostic-tests-runner]
+172.30.96.70
+172.30.96.83

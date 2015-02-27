@@ -1,0 +1,7 @@
+server ns1.telerik.rocks.
+zone telerik.rocks.
+update delete tapjenkins.telerik.rocks.
+{% for host in play_hosts %}
+update add tapjenkins.telerik.rocks. 60 A {{ hostvars[host]['ansible_ssh_host'] }}
+{% endfor %}
+send

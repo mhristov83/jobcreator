@@ -1,0 +1,3 @@
+- include: ubuntu-common-slaves.yml
+
+#- include: windows2008-common-slaves.yml

@@ -1,0 +1,27 @@
+- name: Setup ubuntu common-slaves instances
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    openstack_names: 
+      - xxx-tapjenkins-ubuntucommon-1
+      - xxx-tapjenkins-ubuntucommon-2
+      - xxx-tapjenkins-ubuntucommon-3
+    openstack_tap_role: tapjenkins-ubuntucommon
+  roles:
+    - openstack
+
+- name: Configure machines
+  hosts: role_tapjenkins-ubuntucommon
+  remote_user: ubuntu
+  sudo: yes
+  vars:
+    swarm_slave_labels: "ubuntu-common"
+    swarm_slave_executors_count: 4
+    update_dns_zone: "tap.internal"
+  roles:
+    - { role: update-dns, sudo: no }
+    - role: telerik-certificate-authority
+    - role: dns-client
+    - { role: ubuntu-swarm-slave, tags: ubuntu-swarm-slave }
+    - { role: slave-ubuntu-common, tags: slave-ubuntu-common }

@@ -1,0 +1,7 @@
+swarm_slave_user: "{{ jenkins_slave_user }}"
+swarm_slave_home: "{{ jenkins_slave_home }}"
+swarm_version: "1.16"
+swarm_jar_name: "swarm-client-{{swarm_version}}-jar-with-dependencies.jar"
+swarm_master_url: "http://172.30.96.69:8080"
+swarm_slave_labels: ""
+swarm_slave_executors_count: 4

@@ -1,0 +1,7 @@
+# roles folder that is managed by ansible-galaxy
+roles/common-tap-roles
+
+group_vars/all/openstack_credentials.yml
+
+# python temp files
+callbacks/*.pyc

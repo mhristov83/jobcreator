@@ -1,0 +1,3 @@
+- src: https://gitlab.telerik.com/platformdevops/ansible-common-tap-roles.git
+  scm: git
+  name: common-tap-roles
