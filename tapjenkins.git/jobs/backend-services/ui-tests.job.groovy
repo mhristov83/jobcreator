@@ -58,7 +58,7 @@ for (env in environments) {
         batchFile(($/
  \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
  set TestRunner="C:\SikuliX\runScript.cmd"
- set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\'+suite.suiteName+'_tests.sikuli"
+ set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}_tests.sikuli"
  set TestEnv=https://testtap.telerik.com
  set UserEmail=bsload@telerik.local
  set apiUrl=testapi.everlive.com/v1/
@@ -89,7 +89,7 @@ for (env in environments) {
         batchFile(($/
 \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
 set TestRunner="C:\SikuliX\runScript.cmd"
-set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\'+suite.suiteName+'_tests.sikuli"
+set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\"+suite.suiteName+"_tests.sikuli"
 set TestEnv=https://testtap.telerik.com
 set UserEmail=bsload@telerik.local
 set apiUrl=testapi.everlive.com/v1/
