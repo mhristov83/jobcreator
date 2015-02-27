@@ -16,7 +16,7 @@ def user = [id:'9', suiteTitle:"User", suiteName:"User"]
 
 def suites = []
 suites.add(api_keys)
-suited.add(cloud_code)
+suites.add(cloud_code)
 suites.add(downloads)
 suites.add(files)
 suites.add(project)
