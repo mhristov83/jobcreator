@@ -153,7 +153,7 @@ for (env in environments) {
 
 
      publishers {
-      archiveJunit ($/UITests\SIKULI\results\*.xml/$)
+      archiveJunit 'UITests\SIKULI\results\*.xml'
     }
 }
 

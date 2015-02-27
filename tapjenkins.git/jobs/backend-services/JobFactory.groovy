@@ -34,7 +34,7 @@ class JobFactory {
   static createWindows(context, String jobName = '', String label='') {
     def job = JobFactory.createDefault(context, jobName)
 
-    job.label 'windows'
+    job.label label
 
     return job
   }
