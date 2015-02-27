@@ -1,7 +1,7 @@
 import helpers.*
 
 //Constants
-def defaultBranch = '*/master'
+def defaultBranch = 'master'
 
 def api_keys = [id:'0', suiteTitle:"ApiKeys", suiteName:"ApiKeys"]
 def cloud_code = [id:'1', suiteTitle:"CloudCode", suiteName:"CloudCode"]
@@ -27,9 +27,9 @@ suites.add(user)
 
 def suiteNamesString = ''
 
-def SIT = [id:'0', shortName:'sit', envName:'SIT', viewName:'T3-SIT', envConfig:'ExternalConfigSIT', envConfigTapInt:'ExternalConfigTapIntSIT']
-def UAT = [id:'1', shortName:'uat', envName:'UAT', viewName:'T4-UAT', envConfig:'ExternalConfigUAT', envConfigTapInt:'ExternalConfigTapIntUAT']
-def LIVE = [id:'2', shortName:'live', envName:'LIVE', viewName:'T5-LIVE', envConfig:'ExternalConfigLIVE', envConfigTapInt:'ExternalConfigTapIntLIVE']
+def SIT = [id:'0', shortName:'sit', envName:'SIT', viewName:'U3-SIT', envConfig:'ExternalConfigSIT', envConfigTapInt:'ExternalConfigTapIntSIT']
+def UAT = [id:'1', shortName:'uat', envName:'UAT', viewName:'U4-UAT', envConfig:'ExternalConfigUAT', envConfigTapInt:'ExternalConfigTapIntUAT']
+def LIVE = [id:'2', shortName:'live', envName:'LIVE', viewName:'TU-LIVE', envConfig:'ExternalConfigLIVE', envConfigTapInt:'ExternalConfigTapIntLIVE']
 
 def environments = []
 
@@ -172,7 +172,7 @@ for (env in environments) {
     }
     for (suite in suites) {
       jobs {
-        names(suite.suiteTitle +'-' + env.shortName)
+        names(env.shortName+'-UI-Tests-'+suite.suiteTitle)
         name('Run_all_tests_for_' + env.envName + '_environment')
       }
     }

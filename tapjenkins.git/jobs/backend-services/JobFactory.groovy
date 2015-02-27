@@ -31,14 +31,10 @@ class JobFactory {
     return job
   }
 
-  static createWindows(context, String jobName = '') {
+  static createWindows(context, String jobName = '', String label='') {
     def job = JobFactory.createDefault(context, jobName)
 
     job.label 'windows'
-
-    job.publishers {
-      wsCleanup() //Delete workspace after build.
-    }
 
     return job
   }
