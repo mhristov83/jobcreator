@@ -148,13 +148,10 @@ for (env in environments) {
 
      }
    }
- }
-
-
-
-     publishers {
+   publishers {
       archiveJunit 'UITests\\SIKULI\\results\\*.xml'
     }
+ }
 }
 
 
