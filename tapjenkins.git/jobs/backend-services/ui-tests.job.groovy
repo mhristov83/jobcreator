@@ -126,7 +126,7 @@ if not %ERRORLEVEL%==0 (
 set TestRunner="C:\SikuliX\runScript.cmd"
 set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}.sikuli"
 set TestEnv=https://platform.telerik.com
-set UserEmail=bsload@telerik.local
+set UserEmail=bsload@telerik.com
 set apiUrl=api.everlive.com/v1/
 set apiKey=UwoNtYbnakMRNucW
 set masterKey=BcA4dRTerYa5FsT4qNbCTF1grDbI6RDh
