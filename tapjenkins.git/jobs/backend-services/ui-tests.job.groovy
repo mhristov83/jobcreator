@@ -12,7 +12,7 @@ def project = [id:'5', suiteTitle:"Project", suiteName:"project_tests"]
 def push_notifications = [id:'6', suiteTitle:"PushNotifications", suiteName:"push_notification_tests"]
 def responsive_images = [id:'7', suiteTitle:"ResponsiveImages", suiteName:"responsive_images_tests"]
 def time_open_project = [id:'8', suiteTitle:"TimeOpenProject", suiteName:"timeout_open_project_tests"]
-def user = [id:'9', suiteTitle:"User", suiteName:"user_tests"]
+def user = [id:'9', suiteTitle:"User", suiteName:"User_tests"]
 
 def suites = []
 suites.add(api_keys)
