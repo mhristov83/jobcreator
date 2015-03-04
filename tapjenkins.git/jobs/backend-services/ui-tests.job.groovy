@@ -91,7 +91,7 @@ if not %ERRORLEVEL%==0 (
        batchFile(($/
 \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
 set TestRunner="C:\SikuliX\runScript.cmd"
-set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\cloud_code_tests.sikuli"
+set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}.sikuli"
 set TestEnv=https://sit-platform.telerik.rocks
 set UserEmail=bsload@telerik.local
 set apiUrl=sit-tap-bs.telerik.rocks/v1/
