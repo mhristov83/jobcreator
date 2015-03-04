@@ -91,26 +91,28 @@ if not %ERRORLEVEL%==0 (
        batchFile(($/
 \\telerik.com\resources\TAP\QA\Tools\SikuliSet\tools\QRes\QRes.exe /x:1600 /y:1200
 set TestRunner="C:\SikuliX\runScript.cmd"
-set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}.sikuli"
-set TestEnv=https://testtap.telerik.com
+set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\cloud_code_tests.sikuli"
+set TestEnv=https://sit-platform.telerik.rocks
 set UserEmail=bsload@telerik.local
-set apiUrl=testapi.everlive.com/v1/
-set apiKey=MJsFfcOodnypQC63
-set masterKey=AGkXJ3j1oMSsMMFn14OA9hNn3Y2SWnI6
-set MetadataAppId=51e2cce0-6f37-11e4-832a-879d9d59ccef
+set apiUrl=sit-tap-bs.telerik.rocks/v1/
+set apiKey=WI052W000MVtuUIf
+set masterKey=L9SFEyhPYSQcoSqFtoZwNPyzrKFiQ2J6
+set MetadataAppId=42529940-ad17-11e4-967c-2d1ade8f9dca
 set timeout=60
+set tfisURL=https://localtfis.telerik.com/Authenticate/Wrapv0.9
+set accountId=f584a6b1-7a72-4d33-af10-64c5165de424
 
 call %TestRunner% -r %TestList%
 
 findstr /m "errors=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml 
 if not %ERRORLEVEL%==0 ( 
-  exit /B 1
-  )
+        exit /B 1
+)
 
 findstr /m "failures=\"0\"" %WORKSPACE%\UITests\SIKULI\results\TEST-Report.xml 
 if not %ERRORLEVEL%==0 ( 
-  exit /B 1
-  )
+        exit /B 1
+)
           /$))
       }
     }
@@ -158,7 +160,7 @@ job(type: BuildFlow) {
       name 'Run_all_UI_tests_for_' + env.envName + '_environment'
       label "ui-tests-runner"
     
-    deliveryPipelineConfiguration('Environment - ' + env.envName, 'Run Integration Tests')
+    deliveryPipelineConfiguration('Environment - ' + env.envName, 'Run UI Tests')
     
     wrappers {
          timestamps()
@@ -177,7 +179,7 @@ job(type: BuildFlow) {
     ignore(FAILURE){ retry(3) {results[6] = build("${env.envName}-UI-TESTS-PushNotifications")}}
     ignore(FAILURE){ retry(3) {results[7] = build("${env.envName}-UI-TESTS-ResponsiveImages")}}
     ignore(FAILURE){ retry(3) {results[8] = build("${env.envName}-UI-TESTS-TimeOpenProject")}}
-    ignore(FAILURE){ retry(3) {results[9] = build("${env.envName}-UI-TESTS-TimeOpenProject")}}
+    ignore(FAILURE){ retry(3) {results[9] = build("${env.envName}-UI-TESTS-User")}}
     
     def finalResult = SUCCESS
     
@@ -197,7 +199,7 @@ suiteNamesString = ''
 for (env in environments) {
   view(type: ListView) {
     name(env.viewName)
-    description('This view contains all jobs for ' + env.envName + ' environment. You can trigger manually each test suite or use the "Run_all_tests_for_' + env.envName + '_environment" job in order to trigger all suites.')
+    description('This view contains all jobs for ' + env.envName + ' environment. You can trigger manually each test suite or use the "Run_all_UI_tests_for_' + env.envName + '_environment" job in order to trigger all suites.')
     filterBuildQueue()
     filterExecutors()
     columns {
