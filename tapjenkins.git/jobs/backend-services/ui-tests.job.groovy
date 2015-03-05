@@ -21,7 +21,6 @@ suites.add(files)
 suites.add(project)
 suites.add(push_notifications)
 suites.add(responsive_images)
-suites.add(time_open_project)
 suites.add(user)
 
 def suiteNamesString = ''
