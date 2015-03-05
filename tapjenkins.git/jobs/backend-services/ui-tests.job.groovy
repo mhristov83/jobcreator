@@ -11,8 +11,7 @@ def files = [id:'4', suiteTitle:"Files", suiteName:"file_tests"]
 def project = [id:'5', suiteTitle:"Project", suiteName:"project_tests"]
 def push_notifications = [id:'6', suiteTitle:"PushNotifications", suiteName:"push_notification_tests"]
 def responsive_images = [id:'7', suiteTitle:"ResponsiveImages", suiteName:"responsive_images_tests"]
-def time_open_project = [id:'8', suiteTitle:"TimeOpenProject", suiteName:"timeout_open_project_tests"]
-def user = [id:'9', suiteTitle:"User", suiteName:"User_tests"]
+def user = [id:'8', suiteTitle:"User", suiteName:"User_tests"]
 
 def suites = []
 suites.add(api_keys)
@@ -68,6 +67,8 @@ set apiKey=MJsFfcOodnypQC63
 set masterKey=AGkXJ3j1oMSsMMFn14OA9hNn3Y2SWnI6
 set MetadataAppId=51e2cce0-6f37-11e4-832a-879d9d59ccef
 set timeout=60
+set tfisURL=https://testtfis.telerik.com/Authenticate/Wrapv0.9
+set accountId=628d4475-9664-473a-a9e0-c0d68f16c49f
 
 call %TestRunner% -r %TestList%
 
@@ -132,6 +133,8 @@ set apiKey=UwoNtYbnakMRNucW
 set masterKey=BcA4dRTerYa5FsT4qNbCTF1grDbI6RDh
 set MetadataAppId=4cb190e0-6f36-11e4-b1c9-6de58479113e
 set timeout=60
+set tfisURL=https://tfis.telerik.com/Authenticate/Wrapv0.9
+set accountId=e8ef4e6a-4be9-4675-a85e-b5e61d2793c5
 
 call %TestRunner% -r %TestList%
 
@@ -178,8 +181,7 @@ job(type: BuildFlow) {
     ignore(FAILURE){ retry(3) {results[5] = build("${env.envName}-UI-TESTS-Project")}}
     ignore(FAILURE){ retry(3) {results[6] = build("${env.envName}-UI-TESTS-PushNotifications")}}
     ignore(FAILURE){ retry(3) {results[7] = build("${env.envName}-UI-TESTS-ResponsiveImages")}}
-    ignore(FAILURE){ retry(3) {results[8] = build("${env.envName}-UI-TESTS-TimeOpenProject")}}
-    ignore(FAILURE){ retry(3) {results[9] = build("${env.envName}-UI-TESTS-User")}}
+    ignore(FAILURE){ retry(3) {results[8] = build("${env.envName}-UI-TESTS-User")}}
     
     def finalResult = SUCCESS
     
