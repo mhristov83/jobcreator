@@ -95,7 +95,7 @@ view(type:NestedView){
               buildButton()
             }
             jobs{
-              regex("(Run_all_tests_for_${env.envName}.+|.+-${env.shortName})")
+              regex("(Run_all_service_tests_for_${env.envName}.+|.+-${env.shortName})")
             }
           }
         } 
