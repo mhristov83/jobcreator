@@ -53,22 +53,24 @@ for(type in typeOfTests){
   }
 
   else{
-    view(type:ListView){
-      name(env.envName+'-'+type.shortName)
-      description('This view contains all jobs for ' + env.envName + ' environment. You can trigger manually each test suite or use the "Run_all_tests_for_' + env.envName + '_environment" job in order to trigger all suites.')
-      filterBuildQueue()
-      filterExecutors()
-      columns {
-        status()
-        weather()
-        name()
-        lastSuccess()
-        lastFailure()
-        lastDuration()
-        buildButton()
-      }
-      jobs{
-        regex(".+-${env.shortName}")
+    for(env in environments){
+      view(type:ListView){
+        name(env.envName+'-'+type.shortName)
+        description('This view contains all jobs for ' + env.envName + ' environment. You can trigger manually each test suite or use the "Run_all_tests_for_' + env.envName + '_environment" job in order to trigger all suites.')
+        filterBuildQueue()
+        filterExecutors()
+        columns {
+          status()
+          weather()
+          name()
+          lastSuccess()
+          lastFailure()
+          lastDuration()
+          buildButton()
+        }
+        jobs{
+          regex(".+-${env.shortName}")
+        }
       }
     } 
   }
