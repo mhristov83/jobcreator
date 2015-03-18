@@ -28,13 +28,31 @@ typeOfTests.add(INTEGRATION)
 //Create a parent view to include all other views
 view(type:NestedView){
   name('TESTS-MH')
-  description('This view contains all tests')
+  description('This view contains all UI and Inegration tests')
   filterBuildQueue()
   filterExecutors()
   //Create child views
   views{
-    for(type in typeOfTests){
-                //Create views for UI tests
+    view(type:ListView){
+      name("Execute all tests")
+      description('This view contains the jobs for running all tests for all environments')
+      filterBuildQueue()
+      filterExecutors()
+      columns {
+        status()
+        weather()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+      }
+      jobs{
+        regex(".*Execute.*")
+      }
+
+      for(type in typeOfTests){
+      //Create views for UI tests
       if (type.shortName=='UI'){
         for(i=2; i<=4; i++){
           def env=environments[i]
@@ -53,7 +71,7 @@ view(type:NestedView){
               buildButton()
             }
             jobs{
-              regex("${env.envName}-${type.shortName}-.*")
+              regex("(Run_all_UI_tests_for_${env.envName}|${env.envName}-${type.shortName}-.*)")
             }
           }
         }
@@ -77,7 +95,7 @@ view(type:NestedView){
               buildButton()
             }
             jobs{
-              regex(".+-${env.shortName}")
+              regex("(Run_all_tests_for_|.+-${env.shortName})")
             }
           }
         } 
