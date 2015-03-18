@@ -36,7 +36,6 @@ for(type in typeOfTests){
         description('This view contains all jobs for ' + env.envName + ' environment. You can trigger manually each test suite or use the "Run_all_UI_tests_for_' + env.envName + '_environment" job in order to trigger all suites.')
         filterBuildQueue()
         filterExecutors()
-        regex("${env.envName}-${type.shortName}-.+")
         columns {
           status()
           weather()
@@ -47,7 +46,7 @@ for(type in typeOfTests){
           buildButton()
         }
         jobs{
-          regex("${env.envName}-${type.shortName}-.+")
+          regex("${env.envName}-${type.shortName}-.*")
         }
       }
     }
