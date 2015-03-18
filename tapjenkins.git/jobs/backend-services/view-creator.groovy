@@ -71,7 +71,7 @@ view(type:NestedView){
               buildButton()
             }
             jobs{
-              regex("(Run_all_UI_tests_for_${env.envName}|${env.envName}-${type.shortName}-.*)")
+              regex("(Run_all_UI_tests_for_${env.envName}.+|${env.envName}-${type.shortName}-.*)")
             }
           }
         }
@@ -95,7 +95,7 @@ view(type:NestedView){
               buildButton()
             }
             jobs{
-              regex("(Run_all_tests_for_|.+-${env.shortName})")
+              regex("(Run_all_tests_for_${env.envName}.+|.+-${env.shortName})")
             }
           }
         } 
