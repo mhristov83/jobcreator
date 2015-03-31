@@ -100,10 +100,10 @@ for (env in environments) {
     def suiteForCredentials;
     if((suite.id).toInteger()>9){
 
-      suiteForCredentials=keys.${env.envName}.${suite.suiteTitle}
+      suiteForCredentials=keys."${env.envName}"."${suite.suiteTitle}"
     }
     else{
-      suiteForCredentials=keys.${env.envName}.Common
+      suiteForCredentials=keys."${env.envName}".Common
     }
 
     def jobName = env.envName+'-UI-TESTS-'+suite.suiteTitle
