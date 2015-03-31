@@ -3,15 +3,26 @@ import helpers.*
 //Constants
 def defaultBranch = 'master'
 
-def api_keys = [id:'0', suiteTitle:"TestinAutoApiKeys", suiteName:"api_keys_tests"]
-def viewer = [id:'12', suiteTitle:"Viewer", suiteName:"viewer_tests"]
-
-
-
+def api_keys = [id:'0', suiteTitle:"ApiKeys", suiteName:"api_keys_tests"]
+def cloud_code = [id:'1', suiteTitle:"CloudCode", suiteName:"cloud_code_tests"]
+def content_type = [id:'2', suiteTitle:"ContentType", suiteName:"content_type_tests"]
+def downloads = [id:'3', suiteTitle:"Downloads", suiteName:"downloads_tests"]
+def files = [id:'4', suiteTitle:"Files", suiteName:"file_tests"]
+def project = [id:'5', suiteTitle:"Project", suiteName:"project_tests"]
+def push_notifications = [id:'6', suiteTitle:"PushNotifications", suiteName:"push_notification_tests"]
+def responsive_images = [id:'7', suiteTitle:"ResponsiveImages", suiteName:"responsive_images_tests"]
+def user = [id:'8', suiteTitle:"User", suiteName:"User_tests"]
 
 def suites = []
 suites.add(api_keys)
-suites.add(viewer)
+suites.add(cloud_code)
+suites.add(content_type)
+suites.add(downloads)
+suites.add(files)
+suites.add(project)
+suites.add(push_notifications)
+suites.add(responsive_images)
+suites.add(user)
 
 def suiteNamesString = ''
 
@@ -25,93 +36,15 @@ environments.add(SIT)
 environments.add(UAT)
 environments.add(LIVE)
 
-//Api and Master Keys per project per Env
-def keys = [LIVE:[
-                  Viewer:[
-                        Api:'ApiKey-LIVE-Viewer',
-                        Master:'MasterKey-LIVE-Viewer'
-                  ],
-                  Business:[
-                        Api:'Gruumjdjdjdjdjdj',
-                        Master:'GruMMUU<U'
-                  ],
-                  Developer:[
-                        Api:'Gruumjdjdjdjdjdj',
-                        Master:'GruMMUU<U'
-                  ],
-                  Trial:[
-                        Api:'Gruumjdjdjdjdjdj',
-                        Master:'GruMMUU<U'
-                  ],
-                  Common:[
-                        Api:'ApiKey-LIVE=Common',
-                        Master:'MasterKey-LIVE=Common'
-                  ],
-      ],
-      UAT:[
-                  Viewer:[
-                        Api:'ApiKey-UAT-Viewer',
-                        Master:'MasterKey-UAT-Viewer'
-                  ],
-                  Business:[
-                        Api:'Gruumjdjdjdjdjdj',
-                        Master:'GruMMUU<U'
-                  ],
-                  Developer:[
-                        Api:'Gruumjdjdjdjdjdj',
-                        Master:'GruMMUU<U'
-                  ],
-                  Trial:[
-                        Api:'Gruumjdjdjdjdjdj',
-                        Master:'GruMMUU<U'
-                  ],
-                  Common:[
-                        Api:'ApiKey-UAT=Common',
-                        Master:'MasterKey-UAT=Common'
-                  ],
-      ],
-      SIT:[
-                  Viewer:[
-                        Api:'ApiKey-SIT-Viewer',
-                        Master:'MasterKey-SIT-Viewer'
-                  ],
-                  Business:[
-                        Api:'Gruumjdjdjdjdjdj',
-                        Master:'GruMMUU<U'
-                  ],
-                  Developer:[
-                        Api:'Gruumjdjdjdjdjdj',
-                        Master:'GruMMUU<U'
-                  ],
-                  Trial:[
-                        Api:'Gruumjdjdjdjdjdj',
-                        Master:'GruMMUU<U'
-                  ],
-                  Common:[
-                        Api:'ApiKey-SIT=Common',
-                        Master:'MasterKey-SIT=Common'
-                  ],
-      ],
-  ]
-
 //Create the jobs for the test suites
 for (env in environments) {
   for (suite in suites) {
-    def suiteForCredentials;
-    if((suite.id).toInteger()>9){
-
-      suiteForCredentials=keys.${env.envName}.${suite.suiteTitle}
-    }
-    else{
-      suiteForCredentials=keys.${env.envName}.Common
-    }
-
     def jobName = env.envName+'-UI-TESTS-'+suite.suiteTitle
     suiteNamesString = jobName + ',' + suiteNamesString
 
     def suiteJob = null
     def label = 'ui-tests-runner'
-    suiteJob = JobFactory.createWindowsQA(this, jobName, label)
+    suiteJob = JobFactory.createWindows(this, jobName, label)
 
     GitHelper.useGitLabBsQARepo(suiteJob, defaultBranch)
 
@@ -130,17 +63,12 @@ set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}.sikuli"
 set TestEnv=https://testtap.telerik.com
 set UserEmail=bsload@telerik.local
 set apiUrl=testapi.everlive.com/v1/
-set apiKey=suiteForCredentials.Api
-set masterKey=suiteForCredentials.Master
+set apiKey=MJsFfcOodnypQC63
+set masterKey=AGkXJ3j1oMSsMMFn14OA9hNn3Y2SWnI6
 set MetadataAppId=51e2cce0-6f37-11e4-832a-879d9d59ccef
 set timeout=60
 set tfisURL=https://testtfis.telerik.com/Authenticate/Wrapv0.9
 set accountId=628d4475-9664-473a-a9e0-c0d68f16c49f
-set dataLinkServerId=f43d2890-cc7b-11e4-9fde-256848cceb37
-set contributorEmail=bscontributor@telerik.local
-set viewerEmail=bsviewer@telerik.local
-set noAccessEmail=bsnoaccess@telerik.local
-
 
 call %TestRunner% -r %TestList%
 
@@ -168,16 +96,12 @@ set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}.sikuli"
 set TestEnv=https://sit-platform.telerik.rocks
 set UserEmail=bsload@telerik.local
 set apiUrl=sit-tap-bs.telerik.rocks/v1/
-set apiKey=suiteForCredentials.Api
-set masterKey=suiteForCredentials.Master
+set apiKey=WI052W000MVtuUIf
+set masterKey=L9SFEyhPYSQcoSqFtoZwNPyzrKFiQ2J6
 set MetadataAppId=42529940-ad17-11e4-967c-2d1ade8f9dca
 set timeout=60
 set tfisURL=https://localtfis.telerik.com/Authenticate/Wrapv0.9
 set accountId=f584a6b1-7a72-4d33-af10-64c5165de424
-set dataLinkServerId=d2f557f0-cc7d-11e4-a40b-e531d75568cb
-set contributorEmail=bscontributor@telerik.local
-set viewerEmail=bsviewer@telerik.local
-set noAccessEmail=bsnoaccess@telerik.local
 
 call %TestRunner% -r %TestList%
 
@@ -205,16 +129,12 @@ set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}.sikuli"
 set TestEnv=https://platform.telerik.com
 set UserEmail=bsload@telerik.local
 set apiUrl=api.everlive.com/v1/
-set apiKey=suiteForCredentials.Api
-set masterKey=suiteForCredentials.Master
+set apiKey=UwoNtYbnakMRNucW
+set masterKey=BcA4dRTerYa5FsT4qNbCTF1grDbI6RDh
 set MetadataAppId=4cb190e0-6f36-11e4-b1c9-6de58479113e
 set timeout=60
 set tfisURL=https://tfis.telerik.com/Authenticate/Wrapv0.9
 set accountId=e8ef4e6a-4be9-4675-a85e-b5e61d2793c5
-set dataLinkServerId=5e5c02a0-c95c-11e4-86e6-9701422b62b9
-set contributorEmail=bscontributor@telerik.local
-set viewerEmail=bsviewer@telerik.local
-set noAccessEmail=bsnoaccess@telerik.local
 
 call %TestRunner% -r %TestList%
 
@@ -253,13 +173,16 @@ job(type: BuildFlow) {
   buildFlow("""
     def results = []
     
-    parallel (
-    { ignore(FAILURE){ retry(3) {results[0] = build("${env.envName}-UI-TESTS-ApiKeys")}}}
-    )
-  
-    parallel (
-    { ignore(FAILURE){ retry(3) {results[11] = build("${env.envName}-UI-TESTS-Viewer")}}}
-    )
+    ignore(FAILURE){ retry(3) {results[0] = build("${env.envName}-UI-TESTS-ApiKeys")}}
+    ignore(FAILURE){ retry(3) {results[1] = build("${env.envName}-UI-TESTS-CloudCode")}}
+    ignore(FAILURE){ retry(3) {results[2] = build("${env.envName}-UI-TESTS-ContentType")}}
+    ignore(FAILURE){ retry(3) {results[3] = build("${env.envName}-UI-TESTS-Downloads")}}
+    ignore(FAILURE){ retry(3) {results[4] = build("${env.envName}-UI-TESTS-Files")}}
+    ignore(FAILURE){ retry(3) {results[5] = build("${env.envName}-UI-TESTS-Project")}}
+    ignore(FAILURE){ retry(3) {results[6] = build("${env.envName}-UI-TESTS-PushNotifications")}}
+    ignore(FAILURE){ retry(3) {results[7] = build("${env.envName}-UI-TESTS-ResponsiveImages")}}
+    ignore(FAILURE){ retry(3) {results[8] = build("${env.envName}-UI-TESTS-User")}}
+    
     def finalResult = SUCCESS
     
     for (build in results) {
@@ -272,4 +195,29 @@ job(type: BuildFlow) {
   
 
 suiteNamesString = ''
+}
+
+//Create the views for the different environments (integration, test and live)
+for (env in environments) {
+  view(type: ListView) {
+    name(env.viewName)
+    description('This view contains all jobs for ' + env.envName + ' environment. You can trigger manually each test suite or use the "Run_all_UI_tests_for_' + env.envName + '_environment" job in order to trigger all suites.')
+    filterBuildQueue()
+    filterExecutors()
+    columns {
+      status()
+      weather()
+      name()
+      lastSuccess()
+      lastFailure()
+      lastDuration()
+      buildButton()
+    }
+    for (suite in suites) {
+      jobs {
+        names(env.envName+'-UI-TESTS-'+suite.suiteTitle)
+        name('Run_all_UI_tests_for_' + env.envName + '_environment')
+      }
+    }
+  }
 }
