@@ -3,8 +3,8 @@ import helpers.*
 //Constants
 def defaultBranch = 'master'
 
-def api_keys = [id:'0', suiteTitle:"TestinAutoApiKeys", suiteName:"api_keys_tests"]
-def viewer = [id:'12', suiteTitle:"Viewer", suiteName:"viewer_tests"]
+def api_keys = [id:'0', suiteTitle:"TestingAutoApiKeys", suiteName:"api_keys_tests"]
+def viewer = [id:'12', suiteTitle:"TestingViewer", suiteName:"viewer_tests"]
 
 
 
@@ -168,8 +168,8 @@ set TestList="%WORKSPACE%\UITests\SIKULI\sikuli_tests\${suite.suiteName}.sikuli"
 set TestEnv=https://sit-platform.telerik.rocks
 set UserEmail=bsload@telerik.local
 set apiUrl=sit-tap-bs.telerik.rocks/v1/
-set apiKey=suiteForCredentials.Api
-set masterKey=suiteForCredentials.Master
+set apiKey="${suiteForCredentials.Api}"
+set masterKey="${suiteForCredentials.Master}"
 set MetadataAppId=42529940-ad17-11e4-967c-2d1ade8f9dca
 set timeout=60
 set tfisURL=https://localtfis.telerik.com/Authenticate/Wrapv0.9
@@ -239,36 +239,6 @@ if not %ERRORLEVEL%==0 (
 
 }
 
-job(type: BuildFlow) {
-      name 'Run_all_UI_tests_for_' + env.envName + '_environment'
-      label "ui-tests-runner"
-    
-    deliveryPipelineConfiguration('Environment - ' + env.envName, 'Run UI Tests')
-    
-    wrappers {
-         timestamps()
-       }
-    
-    
-  buildFlow("""
-    def results = []
-    
-    parallel (
-    { ignore(FAILURE){ retry(3) {results[0] = build("${env.envName}-UI-TESTS-ApiKeys")}}}
-    )
-  
-    parallel (
-    { ignore(FAILURE){ retry(3) {results[11] = build("${env.envName}-UI-TESTS-Viewer")}}}
-    )
-    def finalResult = SUCCESS
-    
-    for (build in results) {
-      finalResult = finalResult.combine(build.result)
-    }
-    
-    build.state.setResult(finalResult)    
-    """)
-     }
   
 
 suiteNamesString = ''
